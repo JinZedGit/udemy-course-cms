@@ -1,5 +1,32 @@
 <?php 
 
+function users_online(){
+
+    global $connection;
+
+    $session = session_id();
+    $time = time();
+    $time_out_in_seconds = 300;
+    $time_out = $time - $time_out_in_seconds;
+
+    $query = "SELECT * FROM online_users WHERE session = '$session'";
+    $online_query = mysqli_query($connection, $query);
+    $count = mysqli_num_rows($online_query);
+
+    if($count == NULL){
+
+        mysqli_query($connection, "INSERT INTO online_users (session, time) VALUES ('$session','$time')");
+
+    }else{
+
+        mysqli_query($connection, "UPDATE online_users SET time = '$time' WHERE session = '$session'");
+
+    }
+
+    $users_online = mysqli_query($connection, "SELECT * FROM online_users WHERE time > $time_out");
+    return $count_user = mysqli_num_rows($users_online);
+}
+
 function create_categories(){
 
     global $connection;

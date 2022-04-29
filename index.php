@@ -6,7 +6,6 @@ ob_start();
     include('includes/navigation.php');
     
 ?>
-<!-- TEST -- >
 <!-- Page Content -->
 <div class="container">
 
